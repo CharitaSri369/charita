@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service - Luna Seer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2a1a5e',secondary:'#0f0a2a'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Montserrat', sans-serif;
+background: linear-gradient(to bottom, #0f0a2a, #2a1a5e);
+min-height: 100vh;
+color: #fff;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Playfair Display', serif;
+}
+.logo {
+font-family: 'Pacifico', serif;
+}
+.stars {
+position: absolute;
+width: 100%;
+height: 100%;
+pointer-events: none;
+overflow: hidden;
+top: 0;
+left: 0;
+z-index: 0;
+}
+.star {
+position: absolute;
+background-color: #ffffff;
+border-radius: 50%;
+animation: twinkle 5s infinite;
+box-shadow: 0 0 2px #ffffff, 0 0 4px #ffffff;
+}
+@keyframes twinkle {
+0% { opacity: 0; }
+50% { opacity: 1; }
+100% { opacity: 0; }
+}
+.cosmic-bg {
+background: linear-gradient(135deg, #000000, #0a1a3f, #0f2a5e);
+background-size: 400% 400%;
+animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+.glass-effect {
+background: rgba(15, 10, 42, 0.6);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+</style>
+</head>
+<body class="cosmic-bg">
+<div class="stars" id="stars"></div>
+<!-- Header & Navigation -->
+<header class="w-full py-4 glass-effect sticky top-0 z-50">
+<div class="container mx-auto px-4 flex justify-between items-center">
+<a href="#" class="logo flex items-center gap-3"><img src="https://static.readdy.ai/image/6b4da18786c5fac0705475c458bfa954/0844d54b8087bc0a3a4223f23a08123d.png" alt="Luna Seer" class="h-12"><span class="font-['Pacifico'] text-2xl text-white">Luna Seer</span></a>
+<nav class="hidden md:flex items-center space-x-8">
+<a href="index.html" data-readdy="true" class="text-white hover:text-purple-300 transition-colors" data-section="home">Home</a>
+<a href="index.html" data-readdy="true" class="text-white hover:text-purple-300 transition-colors" data-section="services">Services</a>
+<a href="index.html" data-readdy="true" class="text-white hover:text-purple-300 transition-colors" data-section="about">About Us</a>
+</nav>
+<div class="flex items-center space-x-4">
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-facebook-fill ri-lg"></i>
+</div>
+</a>
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-twitter-fill ri-lg"></i>
+</div>
+</a>
+<a href="https://www.instagram.com/lunaseer4?igsh=cjNmaThxcXl1Njg2" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-instagram-fill ri-lg"></i>
+</div>
+</a>
+<button class="md:hidden text-white" id="mobile-menu-button">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</div>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden md:hidden w-full px-4 py-2">
+<a href="index.html" data-readdy="true" class="block py-2 text-white hover:text-purple-300">Home</a>
+<a href="index.html" data-readdy="true" class="block py-2 text-white hover:text-purple-300">Services</a>
+<a href="index.html" data-readdy="true" class="block py-2 text-white hover:text-purple-300">About Us</a>
+</div>
+</header>
+<!-- Terms of Service Section -->
+<section id="terms" class="py-20">
+<div class="container mx-auto px-4">
+<div class="text-center mb-8">
+<h2 class="text-3xl md:text-4xl font-bold text-center">Terms of Service</h2>
+</div>
+<div class="glass-effect rounded-xl p-8 max-w-4xl mx-auto space-y-8">
+<div>
+<h3 class="text-2xl font-semibold mb-4">Introduction</h3>
+<p class="text-gray-300">Last updated: May 7, 2025</p>
+<p class="text-gray-300 mt-4">Welcome to Luna Seer. These Terms of Service govern your use of our website, services, and applications (collectively, the "Service"). By accessing or using the Service, you agree to be bound by these Terms. If you disagree with any part of the terms, you may not access the Service.</p>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">User Agreements</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Account Creation</h4>
+<p class="text-gray-300">When you create an account with us, you must provide accurate, complete, and current information. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">User Responsibilities</h4>
+<p class="text-gray-300">You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password. You agree not to disclose your password to any third party. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Acceptable Use Policy</h4>
+<p class="text-gray-300">You agree not to use the Service for any purpose that is unlawful or prohibited by these Terms. You may not use the Service in any manner that could damage, disable, overburden, or impair the Service or interfere with any other party's use of the Service.</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Service Usage Terms</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Service Availability</h4>
+<p class="text-gray-300">We strive to ensure that the Service is available at all times. However, there may be occasions when the Service will be interrupted for maintenance, upgrades, or emergency repairs. We will attempt to provide notice of any scheduled service disruption but cannot guarantee that such notice will be provided.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Usage Restrictions</h4>
+<p class="text-gray-300">Your use of the Service is subject to all applicable local, state, national, and international laws and regulations. You agree not to reproduce, duplicate, copy, sell, resell, or exploit any portion of the Service without express written permission from us.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Updates and Modifications</h4>
+<p class="text-gray-300">We reserve the right to modify or discontinue, temporarily or permanently, the Service with or without notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuance of the Service.</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Account Responsibilities</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Account Security</h4>
+<p class="text-gray-300">You are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer. You agree to accept responsibility for all activities that occur under your account or password.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Information Accuracy</h4>
+<p class="text-gray-300">You agree to provide accurate and complete information when creating your account and to update your information to keep it accurate and current. We reserve the right to terminate accounts that we believe, in our sole discretion, contain false or misleading information.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Prohibited Activities</h4>
+<p class="text-gray-300">You agree not to engage in any of the following prohibited activities: (1) copying, distributing, or disclosing any part of the Service; (2) using any automated system to access the Service; (3) transmitting any viruses, worms, or other harmful code; (4) interfering with the proper working of the Service.</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Intellectual Property Rights</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Copyright Information</h4>
+<p class="text-gray-300">The Service and its original content, features, and functionality are and will remain the exclusive property of Luna Seer and its licensors. The Service is protected by copyright, trademark, and other laws of both the United States and foreign countries.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Trademark Usage</h4>
+<p class="text-gray-300">Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of Luna Seer. All other trademarks not owned by us that appear on this site are the property of their respective owners.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Content Ownership</h4>
+<p class="text-gray-300">By posting, uploading, or otherwise making available any content on or through the Service, you grant us a worldwide, non-exclusive, royalty-free license to use, copy, modify, create derivative works from, distribute, and display such content in any form, media, or technology.</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Payment Terms</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Pricing Information</h4>
+<p class="text-gray-300">All prices for services offered via the Service are subject to change without notice. We reserve the right at any time to modify or discontinue the Service (or any part or content thereof) without notice at any time.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Billing Procedures</h4>
+<p class="text-gray-300">We use third-party payment processors to bill you through a payment account linked to your account. The processing of payments will be subject to the terms, conditions, and privacy policies of these payment processors in addition to these Terms.</p>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Disclaimers</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Service Warranties</h4>
+<p class="text-gray-300">The Service is provided on an "AS IS" and "AS AVAILABLE" basis. Luna Seer and its suppliers expressly disclaim all warranties of any kind, whether express or implied, including but not limited to the implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Limitation of Guarantees</h4>
+<p class="text-gray-300">Luna Seer does not warrant that the Service will be uninterrupted, timely, secure, or error-free, that defects will be corrected, or that the Service or the servers that make it available are free of viruses or other harmful components.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">User Acknowledgments</h4>
+<p class="text-gray-300">You acknowledge that Luna Seer has no control over, and no duty to take any action regarding: which users gain access to the Service; what content you access via the Service; what effects the content may have on you; how you may interpret or use the content; or what actions you may take as a result of having been exposed to the content.</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Limitation of Liability</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Scope of Liability</h4>
+<p class="text-gray-300">In no event shall Luna Seer, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your access to or use of or inability to access or use the Service.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Damage Limitations</h4>
+<p class="text-gray-300">To the maximum extent permitted by applicable law, in no event shall Luna Seer be liable for any damages whatsoever, whether direct, indirect, punitive, incidental, special, consequential, or any damages of any kind, arising out of or in connection with the use or inability to use the Service or any content obtained through the Service.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Indemnification</h4>
+<p class="text-gray-300">You agree to defend, indemnify, and hold harmless Luna Seer and its licensee and licensors, and their employees, contractors, agents, officers, and directors, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses, including but not limited to attorney's fees.</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Dispute Resolution</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Governing Law</h4>
+<p class="text-gray-300">These Terms shall be governed and construed in accordance with the laws of the United States, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Arbitration Terms</h4>
+<p class="text-gray-300">Any dispute arising from or relating to the subject matter of these Terms shall be finally settled by arbitration in the United States, using the English language in accordance with the Arbitration Rules and Procedures of the Judicial Arbitration and Mediation Services, Inc. ("JAMS") then in effect, by one commercial arbitrator.</p>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Resolution Procedures</h4>
+<p class="text-gray-300">Before initiating any arbitration, both parties agree to first attempt to resolve any dispute informally. If a dispute cannot be resolved informally, then either party may initiate arbitration as described above. The arbitration may be conducted in person, through the submission of documents, by phone, or online.</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Changes to Terms</h3>
+<p class="text-gray-300">We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
+<p class="text-gray-300 mt-4">By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.</p>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Contact Us</h3>
+<p class="text-gray-300">If you have any questions about these Terms, please contact us at:</p>
+<div class="mt-4 space-y-2 text-gray-300">
+<p>Email: terms@lunaseer.com</p>
+<p>Address: 123 Mystic Lane, Spiritual City, SC 12345</p>
+<p>Phone: (555) 123-4567</p>
+</div>
+</div>
+<div class="mt-12 text-center">
+<a href="index.html" data-readdy="true">
+<button class="bg-primary hover:bg-opacity-80 text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg whitespace-nowrap">Return to Home</button>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-12 glass-effect mt-20">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+<div>
+<a href="#" class="logo mb-4 inline-flex items-center gap-3"><img src="https://static.readdy.ai/image/6b4da18786c5fac0705475c458bfa954/0844d54b8087bc0a3a4223f23a08123d.png" alt="Luna Seer" class="h-10"><span class="font-['Pacifico'] text-xl text-white">Luna Seer</span></a>
+<p class="text-gray-300 mb-4">Discover your destiny through the ancient wisdom of tarot with modern mystical insights.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-facebook-fill"></i>
+</div>
+</a>
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-twitter-fill"></i>
+</div>
+</a>
+<a href="https://www.instagram.com/lunaseer4?igsh=cjNmaThxcXl1Njg2" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-instagram-fill"></i>
+</div>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+<ul class="space-y-2">
+<li><a href="index.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+<li><a href="index.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Services</a><li>
+<li><a href="index.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">About Us</a><li>
+<li><a href="index.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">FAQ</a><li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Legal</h4>
+<ul class="space-y-2">
+<li><a href="index.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+<li><a href="Terms-of-Service.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
+<li><a href="Cookie-Policy-Information.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Cookie Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+<p class="text-gray-300 mb-4">Subscribe to receive mystical insights and special offers.</p>
+<form class="flex">
+<input type="email" placeholder="Your email" class="bg-transparent border border-gray-600 rounded-l-button p-2 text-white focus:outline-none focus:border-purple-400 transition-colors flex-grow">
+<button type="submit" class="bg-primary hover:bg-opacity-80 text-white px-4 py-2 rounded-r-button whitespace-nowrap">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-400 mb-4 md:mb-0">© 2025 Luna Seer. All rights reserved.</p>
+<div class="flex items-center space-x-4">
+<div class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-shield-check-line text-green-400"></i>
+</div>
+<span class="text-sm text-gray-400">Secure Payments</span>
+</div>
+<div class="flex space-x-2">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-visa-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-mastercard-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-paypal-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-apple-fill ri-lg"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Create stars background
+const starsContainer = document.getElementById('stars');
+for (let i = 0; i < 100; i++) {
+const star = document.createElement('div');
+star.classList.add('star');
+star.style.width = `${Math.random() * 3}px`;
+star.style.height = star.style.width;
+star.style.left = `${Math.random() * 100}%`;
+star.style.top = `${Math.random() * 100}%`;
+star.style.animationDelay = `${Math.random() * 5}s`;
+starsContainer.appendChild(star);
+}
+// Mobile menu toggle
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+mobileMenuButton.addEventListener('click', function() {
+mobileMenu.classList.toggle('hidden');
+});
+// Navigation links
+const navLinks = document.querySelectorAll('.nav-link, .footer-link');
+navLinks.forEach(link => {
+link.addEventListener('click', function(e) {
+e.preventDefault();
+window.location.href = "https://readdy.ai/home/00841be5-2152-4f48-b6a9-184339781c0c/92f34b88-c166-4df5-8df4-231df8711e89";
+});
+});
+});
+</script>
+</body>
+</html>

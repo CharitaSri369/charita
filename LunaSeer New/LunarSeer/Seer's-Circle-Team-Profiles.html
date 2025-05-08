@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seer's Circle - Luna Seer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2a1a5e',secondary:'#0f0a2a'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Montserrat', sans-serif;
+background: linear-gradient(to bottom, #0f0a2a, #2a1a5e);
+min-height: 100vh;
+color: #fff;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Playfair Display', serif;
+}
+.logo {
+font-family: 'Pacifico', serif;
+}
+.cosmic-bg {
+background: linear-gradient(135deg, #000000, #0a1a3f, #0f2a5e);
+background-size: 400% 400%;
+animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+.glass-effect {
+background: rgba(15, 10, 42, 0.6);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.stars {
+position: absolute;
+width: 100%;
+height: 100%;
+pointer-events: none;
+overflow: hidden;
+top: 0;
+left: 0;
+z-index: 0;
+}
+.star {
+position: absolute;
+background-color: #ffffff;
+border-radius: 50%;
+animation: twinkle 5s infinite;
+box-shadow: 0 0 2px #ffffff, 0 0 4px #ffffff;
+}
+@keyframes twinkle {
+0% { opacity: 0; }
+50% { opacity: 1; }
+100% { opacity: 0; }
+}
+.profile-card {
+transition: all 0.3s ease;
+}
+.profile-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+.profile-image {
+position: relative;
+overflow: hidden;
+}
+.profile-image::after {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(42,26,94,0.4) 100%);
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.profile-card:hover .profile-image::after {
+opacity: 1;
+}
+.profile-image img {
+transition: transform 0.5s ease;
+}
+.profile-card:hover .profile-image img {
+transform: scale(1.05);
+}
+.glow-effect {
+position: relative;
+}
+.glow-effect::before {
+content: "";
+position: absolute;
+top: -5px;
+left: -5px;
+right: -5px;
+bottom: -5px;
+background: linear-gradient(45deg, #9f7aea, #4c1d95);
+border-radius: inherit;
+z-index: -1;
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.profile-card:hover .glow-effect::before {
+opacity: 0.5;
+animation: pulse 2s infinite;
+}
+@keyframes pulse {
+0% { opacity: 0.3; }
+50% { opacity: 0.6; }
+100% { opacity: 0.3; }
+}
+.book-btn {
+position: relative;
+overflow: hidden;
+transition: all 0.3s ease;
+}
+.book-btn::after {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+transform: translateX(-100%);
+transition: transform 0.6s ease;
+}
+.book-btn:hover::after {
+transform: translateX(100%);
+}
+.floating-particles {
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+overflow: hidden;
+z-index: -1;
+}
+.particle {
+position: absolute;
+width: 6px;
+height: 6px;
+background: rgba(255, 255, 255, 0.3);
+border-radius: 50%;
+animation: float 15s infinite linear;
+}
+@keyframes float {
+0% {
+transform: translateY(0) rotate(0deg);
+opacity: 0;
+}
+10% {
+opacity: 1;
+}
+90% {
+opacity: 1;
+}
+100% {
+transform: translateY(-1000px) rotate(720deg);
+opacity: 0;
+}
+}
+</style>
+</head>
+<body class="cosmic-bg">
+<div class="stars" id="stars"></div>
+<div class="floating-particles" id="particles"></div>
+<!-- Header & Navigation -->
+<header class="w-full py-4 glass-effect sticky top-0 z-50">
+<div class="container mx-auto px-4 flex justify-between items-center">
+<a href="index.html" data-readdy="true" class="logo flex items-center gap-3">
+<img src="https://static.readdy.ai/image/6b4da18786c5fac0705475c458bfa954/0844d54b8087bc0a3a4223f23a08123d.png" alt="Luna Seer" class="h-12">
+<span class="font-['Pacifico'] text-2xl text-white">Luna Seer</span>
+</a>
+<nav class="hidden md:flex items-center space-x-8">
+<a href="index.html" data-readdy="true" class="nav-link text-white hover:text-purple-300 transition-colors">Home</a>
+<a href="index.html" data-readdy="true" class="nav-link text-white hover:text-purple-300 transition-colors">Services</a>
+<a href="index.html" data-readdy="true" class="nav-link text-white hover:text-purple-300 transition-colors">About Us</a>
+<a href="Contact-Luna-Seer.html" data-readdy="true" class="nav-link text-white hover:text-purple-300 transition-colors">Contact</a>
+</nav>
+<div class="flex items-center space-x-4">
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-facebook-fill ri-lg"></i>
+</div>
+</a>
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-twitter-fill ri-lg"></i>
+</div>
+</a>
+<a href="https://www.instagram.com/lunaseer4?igsh=cjNmaThxcXl1Njg2" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-instagram-fill ri-lg"></i>
+</div>
+</a>
+<button class="md:hidden text-white" id="mobile-menu-button">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</div>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden md:hidden w-full px-4 py-2">
+<a href="index.html" data-readdy="true" class="nav-link block py-2 text-white hover:text-purple-300">Home</a>
+<a href="index.html" data-readdy="true" class="nav-link block py-2 text-white hover:text-purple-300">Services</a>
+<a href="index.html" data-readdy="true" class="nav-link block py-2 text-white hover:text-purple-300">About Us</a>
+<a href="Contact-Luna-Seer.html" data-readdy="true" class="nav-link block py-2 text-white hover:text-purple-300">Contact</a>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="py-20 relative">
+<div class="container mx-auto px-4 z-10">
+<div class="text-center max-w-4xl mx-auto">
+<h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Meet Our Seer's Circle</h1>
+<p class="text-lg md:text-xl mb-12 text-gray-200">Discover the gifted mystics who channel ancient wisdom to illuminate your path. Our diverse circle of seers brings unique talents and perspectives to every reading.</p>
+</div>
+</div>
+</section>
+<!-- Readers Grid Section -->
+<section class="py-10 relative">
+<div class="container mx-auto px-4 z-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Reader 1 -->
+<div class="profile-card glass-effect rounded-xl overflow-hidden">
+<div class="profile-image">
+<img src="https://readdy.ai/api/search-image?query=Mystical%2520and%2520elegant%2520Scorpio%2520zodiac%2520symbol%2520illustration%2520with%2520deep%2520purple%2520and%2520gold%2520colors.%2520The%2520scorpion%2520design%2520is%2520intricate%2520and%2520detailed%252C%2520surrounded%2520by%2520celestial%2520elements%2520like%2520stars%2520and%2520cosmic%2520swirls.%2520The%2520background%2520is%2520a%2520rich%2520dark%2520blue%2520with%2520subtle%2520magical%2520elements%2520and%2520constellation%2520patterns.&width=600&height=600&seq=987671&orientation=squarish" alt="Scorpio - Charita Sri Veerapaneni" class="w-full h-64 object-contain">
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-2xl font-semibold mb-1">Charita Sri Veerapaneni</h3>
+<div class="flex items-center gap-2">
+<p class="text-purple-300 text-sm">Spiritual Guide • Vedic Astrologer</p>
+<div class="w-6 h-6 flex items-center justify-center text-purple-300">
+<i class="ri-scorpius-line"></i>
+</div>
+</div>
+</div>
+<div class="flex">
+<div class="text-yellow-400">
+<i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Vedic Astrology</span>
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Spiritual Healing</span>
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Life Path Guidance</span>
+</div>
+<p class="text-gray-300 text-sm">Charita brings deep wisdom from ancient Vedic traditions to her readings. Her unique approach combines traditional astrology with modern spiritual healing techniques. She specializes in helping clients understand their life purpose and navigate major life transitions with grace and clarity.</p>
+</div>
+</div>
+</div>
+<!-- Reader 2 -->
+<div class="profile-card glass-effect rounded-xl overflow-hidden">
+<div class="profile-image">
+<img src="https://readdy.ai/api/search-image?query=Ethereal%2520and%2520flowing%2520Pisces%2520zodiac%2520symbol%2520illustration%2520with%2520aqua%2520blue%2520and%2520silver%2520colors.%2520Two%2520fish%2520swimming%2520in%2520harmony%252C%2520detailed%2520with%2520flowing%2520water%2520elements%2520and%2520mystical%2520waves.%2520The%2520background%2520features%2520a%2520deep%2520blue%2520ocean%2520theme%2520with%2520subtle%2520sparkles%2520and%2520constellation%2520patterns.&width=600&height=600&seq=987672&orientation=squarish" alt="Pisces - Vijaya Sanjana Edupuganti" class="w-full h-64 object-contain">
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-2xl font-semibold mb-1">Vijaya Sanjana Edupuganti</h3>
+<div class="flex items-center gap-2">
+<p class="text-purple-300 text-sm">Intuitive Guide • Energy Healer</p>
+<div class="w-6 h-6 flex items-center justify-center text-purple-300">
+<i class="ri-pisces-line"></i>
+</div>
+</div>
+</div>
+<div class="flex">
+<div class="text-yellow-400">
+<i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Energy Healing</span>
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Chakra Balancing</span>
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Emotional Wellness</span>
+</div>
+<p class="text-gray-300 text-sm">Vijaya Sanjana combines traditional energy healing practices with modern therapeutic approaches. Her intuitive abilities help clients release emotional blockages and find inner harmony. She specializes in chakra balancing and creating personalized healing journeys for spiritual growth.</p>
+</div>
+</div>
+</div>
+<!-- Reader 3 -->
+<div class="profile-card glass-effect rounded-xl overflow-hidden">
+<div class="profile-image">
+<img src="https://readdy.ai/api/search-image?query=Powerful%2520and%2520mysterious%2520Scorpio%2520zodiac%2520symbol%2520illustration%2520with%2520deep%2520crimson%2520and%2520gold%2520accents.%2520The%2520scorpion%2520design%2520is%2520bold%2520and%2520detailed%252C%2520surrounded%2520by%2520mystical%2520elements%2520and%2520transformative%2520energy%2520symbols.%2520The%2520background%2520shows%2520a%2520rich%2520dark%2520blue%2520with%2520subtle%2520magical%2520elements%2520and%2520constellation%2520patterns.&width=600&height=600&seq=987673&orientation=squarish" alt="Scorpio - Lakshmi Pranavi Pasunuti" class="w-full h-64 object-contain">
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-2xl font-semibold mb-1">Lakshmi Pranavi Pasunuti</h3>
+<div class="flex items-center gap-2">
+<p class="text-purple-300 text-sm">Meditation Guide • Spiritual Counselor</p>
+<div class="w-6 h-6 flex items-center justify-center text-purple-300">
+<i class="ri-scorpius-line"></i>
+</div>
+</div>
+</div>
+<div class="flex">
+<div class="text-yellow-400">
+<i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Meditation</span>
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Mindfulness</span>
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Inner Peace</span>
+</div>
+<p class="text-gray-300 text-sm">Lakshmi Pranavi guides clients through transformative meditation practices and mindfulness techniques. Her approach combines ancient wisdom with modern stress-relief methods. She specializes in helping clients find inner peace and maintain spiritual balance in their daily lives.</p>
+</div>
+</div>
+</div>
+<!-- Reader 4 -->
+<div class="profile-card glass-effect rounded-xl overflow-hidden">
+<div class="profile-image">
+<img src="https://readdy.ai/api/search-image?query=Elegant%2520and%2520precise%2520Virgo%2520zodiac%2520symbol%2520illustration%2520with%2520emerald%2520green%2520and%2520gold%2520details.%2520The%2520maiden%2520figure%2520is%2520gracefully%2520detailed%252C%2520surrounded%2520by%2520wheat%2520stalks%2520and%2520earth%2520elements.%2520The%2520background%2520features%2520a%2520deep%2520blue%2520celestial%2520theme%2520with%2520subtle%2520geometric%2520patterns%2520and%2520constellation%2520details.&width=600&height=600&seq=987674&orientation=squarish" alt="Virgo - Jyothsna Vibhudi" class="w-full h-64 object-contain">
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-2xl font-semibold mb-1">Jyothsna Vibhudi</h3>
+<div class="flex items-center gap-2">
+<p class="text-purple-300 text-sm">Spiritual Mentor • Life Coach</p>
+<div class="w-6 h-6 flex items-center justify-center text-purple-300">
+<i class="ri-virgo-line"></i>
+</div>
+</div>
+</div>
+<div class="flex">
+<div class="text-yellow-400">
+<i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Life Coaching</span>
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Personal Growth</span>
+<span class="bg-primary bg-opacity-30 text-xs px-3 py-1 rounded-full">Spiritual Development</span>
+</div>
+<p class="text-gray-300 text-sm">Jyothsna combines spiritual wisdom with practical life coaching techniques. Her holistic approach helps clients achieve personal growth while maintaining spiritual awareness. She specializes in guiding individuals through life transitions and helping them discover their authentic path.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="py-20 relative">
+<div class="container mx-auto px-4 z-10">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-12">What Our Clients Say</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="glass-effect rounded-xl p-6">
+<div class="flex items-start mb-4">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520woman%2520in%2520her%252030s%2520with%2520blonde%2520hair%2520and%2520a%2520warm%2520smile%252C%2520business%2520casual%2520attire%252C%2520neutral%2520background%252C%2520well-lit%2520portrait%2520style&width=100&height=100&seq=987667&orientation=squarish" alt="Emily Richardson" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<h4 class="text-lg font-medium">Emily Richardson</h4>
+<div class="flex text-yellow-400 text-sm mb-1">
+<i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+</div>
+<p class="text-sm text-gray-400">Reading with Cassandra Moonlight</p>
+</div>
+</div>
+<p class="text-gray-300 text-sm">"My reading with Cassandra was truly life-changing. She revealed patterns from my past that were affecting my current relationship, and her guidance helped me break free from cycles that had been holding me back for years. Her intuition is remarkable."</p>
+</div>
+<!-- Testimonial 2 -->
+<div class="glass-effect rounded-xl p-6">
+<div class="flex items-start mb-4">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520man%2520in%2520his%252040s%2520with%2520short%2520dark%2520hair%2520and%2520glasses%252C%2520friendly%2520expression%252C%2520business%2520casual%2520attire%252C%2520neutral%2520background%252C%2520well-lit%2520portrait%2520style&width=100&height=100&seq=987668&orientation=squarish" alt="Michael Donovan" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<h4 class="text-lg font-medium">Michael Donovan</h4>
+<div class="flex text-yellow-400 text-sm mb-1">
+<i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i>
+</div>
+<p class="text-sm text-gray-400">Reading with Zephyr Obsidian</p>
+</div>
+</div>
+<p class="text-gray-300 text-sm">"I was skeptical about numerology, but Zephyr's reading was surprisingly accurate. His insights about my career path confirmed decisions I'd been contemplating. The precision of his analysis gave me confidence to make a major professional change."</p>
+</div>
+<!-- Testimonial 3 -->
+<div class="glass-effect rounded-xl p-6">
+<div class="flex items-start mb-4">
+<div class="w-12 h-12 rounded-full overflow-hidden mr-4 flex-shrink-0">
+<img src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520woman%2520in%2520her%252050s%2520with%2520short%2520gray%2520hair%2520and%2520a%2520confident%2520expression%252C%2520business%2520casual%2520attire%252C%2520neutral%2520background%252C%2520well-lit%2520portrait%2520style&width=100&height=100&seq=987669&orientation=squarish" alt="Sandra Winters" class="w-full h-full object-cover object-top">
+</div>
+<div>
+<h4 class="text-lg font-medium">Sandra Winters</h4>
+<div class="flex text-yellow-400 text-sm mb-1">
+<i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i>
+</div>
+<p class="text-sm text-gray-400">Reading with Luna Ravencroft</p>
+</div>
+</div>
+<p class="text-gray-300 text-sm">"After losing my mother, I sought closure through Luna's mediumship. The specific details she revealed could only have come from my mother. The healing I experienced was profound, and I finally feel at peace with her passing."</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Join Our Circle Section -->
+<section class="py-20 relative">
+<div class="container mx-auto px-4 z-10">
+<div class="glass-effect rounded-xl p-8 md:p-12 max-w-4xl mx-auto">
+<div class="text-center mb-8">
+<h2 class="text-3xl md:text-4xl font-bold mb-6">Join Our Mystical Community</h2>
+<p class="text-lg text-gray-300 mb-8">Subscribe to receive monthly cosmic forecasts, special offers, and spiritual wisdom from our Seer's Circle.</p>
+<form class="max-w-md mx-auto flex">
+<input type="email" placeholder="Your email address" class="bg-transparent border border-gray-600 rounded-l-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors flex-grow">
+<button type="submit" class="bg-primary hover:bg-opacity-80 text-white px-6 py-3 rounded-r-button whitespace-nowrap">Subscribe</button>
+</form>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-center gap-6 mt-8">
+<a href="https://www.instagram.com/lunaseer4?igsh=cjNmaThxcXl1Njg2" class="flex items-center gap-2 text-purple-300 hover:text-white transition-colors">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-instagram-line"></i>
+</div>
+<span>Follow on Instagram</span>
+</a>
+<a href="#" class="flex items-center gap-2 text-purple-300 hover:text-white transition-colors">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-facebook-line"></i>
+</div>
+<span>Join Facebook Group</span>
+</a>
+<a href="#" class="flex items-center gap-2 text-purple-300 hover:text-white transition-colors">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-calendar-line"></i>
+</div>
+<span>Upcoming Events</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-12 glass-effect mt-20">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+<div>
+<a href="https://readdy.ai/home/00841be5-2152-4f48-b6a9-184339781c0c/92f34b88-c166-4df5-8df4-231df8711e89" data-readdy="true" class="logo mb-4 inline-flex items-center gap-3">
+<img src="https://static.readdy.ai/image/6b4da18786c5fac0705475c458bfa954/0844d54b8087bc0a3a4223f23a08123d.png" alt="Luna Seer" class="h-10">
+<span class="font-['Pacifico'] text-xl text-white">Luna Seer</span>
+</a>
+<p class="text-gray-300 mb-4">Discover your destiny through the ancient wisdom of tarot with modern mystical insights.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-facebook-fill"></i>
+</div>
+</a>
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-twitter-fill"></i>
+</div>
+</a>
+<a href="https://www.instagram.com/lunaseer4?igsh=cjNmaThxcXl1Njg2" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-instagram-fill"></i>
+</div>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+<ul class="space-y-2">
+<li><a href="index.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+<li><a href="index.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Services</a></li>
+<li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
+<li><a href="index.html" class="text-gray-300 hover:text-white transition-colors">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Legal</h4>
+<ul class="space-y-2">
+<li><a href="index.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+<li><a href="Terms-of-Service.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
+<li><a href="Cookie-Policy-Information.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Cookie Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+<p class="text-gray-300 mb-4">Subscribe to receive mystical insights and special offers.</p>
+<form class="flex">
+<input type="email" placeholder="Your email" class="bg-transparent border border-gray-600 rounded-l-button p-2 text-white focus:outline-none focus:border-purple-400 transition-colors flex-grow">
+<button type="submit" class="bg-primary hover:bg-opacity-80 text-white px-4 py-2 rounded-r-button whitespace-nowrap">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-400 mb-4 md:mb-0">© 2025 Luna Seer. All rights reserved.</p>
+<div class="flex items-center space-x-4">
+<div class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-shield-check-line text-green-400"></i>
+</div>
+<span class="text-sm text-gray-400">Secure Payments</span>
+</div>
+<div class="flex space-x-2">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-visa-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-mastercard-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-paypal-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-apple-fill ri-lg"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Create stars background
+const starsContainer = document.getElementById('stars');
+for (let i = 0; i < 100; i++) {
+const star = document.createElement('div');
+star.classList.add('star');
+star.style.width = `${Math.random() * 3}px`;
+star.style.height = star.style.width;
+star.style.left = `${Math.random() * 100}%`;
+star.style.top = `${Math.random() * 100}%`;
+star.style.animationDelay = `${Math.random() * 5}s`;
+starsContainer.appendChild(star);
+}
+// Create floating particles
+const particlesContainer = document.getElementById('particles');
+for (let i = 0; i < 30; i++) {
+const particle = document.createElement('div');
+particle.classList.add('particle');
+particle.style.left = `${Math.random() * 100}%`;
+particle.style.top = `${Math.random() * 100}%`;
+particle.style.opacity = Math.random() * 0.5 + 0.3;
+particle.style.animationDuration = `${15 + Math.random() * 20}s`;
+particle.style.animationDelay = `${Math.random() * 5}s`;
+particlesContainer.appendChild(particle);
+}
+// Mobile menu toggle
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+mobileMenuButton.addEventListener('click', function() {
+mobileMenu.classList.toggle('hidden');
+});
+});
+</script>
+</body>
+</html>

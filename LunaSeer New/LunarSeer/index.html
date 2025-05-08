@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luna Seer - Mystical Tarot Reading</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#2a1a5e',secondary:'#0f0a2a'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Montserrat', sans-serif;
+background: linear-gradient(to bottom, #0f0a2a, #2a1a5e);
+min-height: 100vh;
+color: #fff;
+}
+h1, h2, h3, h4, h5, h6 {
+font-family: 'Playfair Display', serif;
+}
+.logo {
+font-family: 'Pacifico', serif;
+}
+.tarot-card {
+perspective: 1000px;
+transition: transform 0.3s;
+}
+.tarot-card-inner {
+position: relative;
+width: 100%;
+height: 100%;
+transition: transform 0.8s;
+transform-style: preserve-3d;
+}
+.tarot-card.flipped .tarot-card-inner {
+transform: rotateY(180deg);
+}
+.tarot-card-front, .tarot-card-back {
+position: absolute;
+width: 100%;
+height: 100%;
+backface-visibility: hidden;
+border-radius: 12px;
+}
+.tarot-card-front {
+background: linear-gradient(135deg, #3a2a70, #1a0f40);
+display: flex;
+align-items: center;
+justify-content: center;
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.tarot-card-back {
+transform: rotateY(180deg);
+background-size: cover;
+background-position: center;
+border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.tarot-card:hover {
+transform: translateY(-10px);
+}
+.tarot-card.locked {
+opacity: 0.5;
+pointer-events: none;
+}
+.tarot-card.selected {
+box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+.custom-checkbox {
+position: relative;
+cursor: pointer;
+user-select: none;
+}
+.custom-checkbox input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+height: 0;
+width: 0;
+}
+.checkmark {
+position: absolute;
+top: 0;
+left: 0;
+height: 20px;
+width: 20px;
+background-color: rgba(255, 255, 255, 0.1);
+border-radius: 4px;
+transition: all 0.3s;
+}
+.custom-checkbox:hover input ~ .checkmark {
+background-color: rgba(255, 255, 255, 0.2);
+}
+.custom-checkbox input:checked ~ .checkmark {
+background-color: #2a1a5e;
+}
+.checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}
+.custom-checkbox input:checked ~ .checkmark:after {
+display: block;
+}
+.custom-checkbox .checkmark:after {
+left: 7px;
+top: 3px;
+width: 6px;
+height: 12px;
+border: solid white;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+}
+.checkmark.clicked {
+transform: scale(0.9);
+}
+.checkmark {
+transition: transform 0.2s ease;
+}
+.custom-switch {
+position: relative;
+display: inline-block;
+width: 50px;
+height: 24px;
+}
+.custom-switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: rgba(255, 255, 255, 0.1);
+transition: .4s;
+border-radius: 34px;
+}
+.slider:before {
+position: absolute;
+content: "";
+height: 16px;
+width: 16px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+transition: .4s;
+border-radius: 50%;
+}
+input:checked + .slider {
+background-color: #2a1a5e;
+}
+input:checked + .slider:before {
+transform: translateX(26px);
+}
+.stars {
+position: absolute;
+width: 100%;
+height: 100%;
+pointer-events: none;
+overflow: hidden;
+top: 0;
+left: 0;
+z-index: 0;
+}
+.star {
+position: absolute;
+background-color: #ffffff;
+border-radius: 50%;
+animation: twinkle 5s infinite;
+box-shadow: 0 0 2px #ffffff, 0 0 4px #ffffff;
+}
+@keyframes twinkle {
+0% { opacity: 0; }
+50% { opacity: 1; }
+100% { opacity: 0; }
+}
+.payment-card {
+background: rgba(255, 255, 255, 0.05);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+input[type="range"] {
+-webkit-appearance: none;
+width: 100%;
+height: 6px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 5px;
+outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+-webkit-appearance: none;
+appearance: none;
+width: 18px;
+height: 18px;
+background: #2a1a5e;
+border-radius: 50%;
+cursor: pointer;
+border: 2px solid white;
+}
+input[type="range"]::-moz-range-thumb {
+width: 18px;
+height: 18px;
+background: #2a1a5e;
+border-radius: 50%;
+cursor: pointer;
+border: 2px solid white;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+.cosmic-bg {
+background: linear-gradient(135deg, #000000, #0a1a3f, #0f2a5e);
+background-size: 400% 400%;
+animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+.glass-effect {
+background: rgba(15, 10, 42, 0.6);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+</style>
+</head>
+<body class="cosmic-bg">
+<div class="stars" id="stars"></div>
+<!-- Header & Navigation -->
+<header class="w-full py-4 glass-effect sticky top-0 z-50">
+<div class="container mx-auto px-4 flex justify-between items-center">
+<a href="#" class="logo flex items-center gap-3"><img src="https://static.readdy.ai/image/6b4da18786c5fac0705475c458bfa954/0844d54b8087bc0a3a4223f23a08123d.png" alt="Luna Seer" class="h-12"><span class="font-['Pacifico'] text-2xl text-white">Luna Seer</span></a>
+<nav class="hidden md:flex items-center space-x-8">
+<a href="#" class="nav-link text-white hover:text-purple-300 transition-colors" data-section="home">Home</a>
+<a href="#" class="nav-link text-white hover:text-purple-300 transition-colors" data-section="services">Services</a>
+<a href="#" class="nav-link text-white hover:text-purple-300 transition-colors" data-section="about">About Us</a>
+</nav>
+<div class="flex items-center space-x-4">
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-facebook-fill ri-lg"></i>
+</div>
+</a>
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-twitter-fill ri-lg"></i>
+</div>
+</a>
+<a href="https://www.instagram.com/lunaseer4?igsh=cjNmaThxcXl1Njg2" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-instagram-fill ri-lg"></i>
+</div>
+</a>
+<button class="md:hidden text-white" id="mobile-menu-button">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-menu-line ri-lg"></i>
+</div>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden md:hidden w-full px-4 py-2">
+<a href="#" class="nav-link block py-2 text-white hover:text-purple-300" data-section="home">Home</a>
+<a href="#" class="nav-link block py-2 text-white hover:text-purple-300" data-section="services">Services</a>
+<a href="#" class="nav-link block py-2 text-white hover:text-purple-300" data-section="about">About Us</a>
+</div>
+</header>
+<!-- Hero Section -->
+<section id="home" class="min-h-screen flex items-center justify-center py-20 relative">
+<div class="container mx-auto px-4 z-10">
+<div class="flex flex-col md:flex-row items-center justify-between gap-12">
+<div class="md:w-1/2 text-center md:text-left">
+<h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Discover Your Destiny Through the Cards</h1>
+<p class="text-lg md:text-xl mb-8 text-gray-200">Experience the ancient wisdom of tarot with modern mystical insights. Our unique readings reveal your path and illuminate your future.</p>
+<button id="start-reading-btn" class="bg-primary hover:bg-opacity-80 text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg whitespace-nowrap">Begin Your Reading</button>
+</div>
+<div class="md:w-1/2 flex justify-center">
+<div class="relative w-full max-w-md">
+<img src="https://readdy.ai/api/search-image?query=A%20mesmerizing%20cosmic%20scene%20featuring%20floating%20tarot%20cards%20amidst%20a%20deep%20space%20background%20with%20swirling%20blue%20nebulas%20and%20twinkling%20stars.%20The%20cards%20emit%20an%20ethereal%20blue%20light%2C%20creating%20luminous%20trails%20as%20they%20orbit%20around%20a%20central%20point.%20Sacred%20geometry%20patterns%20and%20constellation%20lines%20connect%20the%20cards%2C%20while%20distant%20galaxies%20and%20celestial%20bodies%20create%20a%20sense%20of%20infinite%20mystical%20depth.%20The%20scene%20is%20rendered%20in%20rich%20shades%20of%20deep%20blue%20and%20black%20with%20accents%20of%20silver%20starlight.&width=600&height=600&seq=987655&orientation=squarish" alt="Mystical Tarot Cards" class="w-full rounded-xl shadow-2xl">
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Reading Form Section -->
+<section id="reading-form" class="py-20 hidden">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Your Personalized Tarot Reading</h2>
+<div class="max-w-2xl mx-auto glass-effect rounded-xl p-8 shadow-xl">
+<form id="user-details-form" class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label for="first-name" class="block text-sm font-medium mb-2">First Name</label>
+<input type="text" id="first-name" name="first-name" required class="w-full bg-transparent border border-gray-500 rounded-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors">
+</div>
+<div>
+<label for="last-name" class="block text-sm font-medium mb-2">Last Name</label>
+<input type="text" id="last-name" name="last-name" required class="w-full bg-transparent border border-gray-500 rounded-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors">
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label for="birth-date" class="block text-sm font-medium mb-2">Date of Birth</label>
+<input type="date" id="birth-date" name="birth-date" required class="w-full bg-transparent border border-gray-500 rounded-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors">
+</div>
+<div>
+<label for="birth-time" class="block text-sm font-medium mb-2">Time of Birth</label>
+<input type="time" id="birth-time" name="birth-time" required class="w-full bg-transparent border border-gray-500 rounded-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors">
+</div>
+</div>
+<div>
+<label for="question" class="block text-sm font-medium mb-2">What question would you like to ask the cards?</label>
+<textarea id="question" name="question" rows="3" class="w-full bg-transparent border border-gray-500 rounded-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors"></textarea>
+</div>
+<div class="flex items-center space-x-2">
+<label class="custom-checkbox flex items-center">
+<input type="checkbox" id="terms" name="terms" required>
+<span class="checkmark"></span>
+<span class="ml-7">I agree to the <button type="button" id="terms-service-btn" class="text-purple-400 hover:underline bg-transparent border-none p-0 inline">Terms of Service</button></span>
+
+<!-- Terms of Service Modal -->
+<div id="terms-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] flex flex-col relative">
+    <div class="p-6 border-b border-gray-200">
+      <h3 class="text-xl font-semibold text-gray-900">Terms of Service</h3>
+    </div>
+    <div class="p-6 overflow-y-auto flex-grow text-gray-700">
+      <h4 class="font-semibold mb-4">1. Acceptance of Terms</h4>
+      <p class="mb-4">By accessing and using Luna Seer's services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
+      
+      <h4 class="font-semibold mb-4">2. Service Description</h4>
+      <p class="mb-4">Luna Seer provides tarot reading services for entertainment and personal insight purposes. Our readings should not be considered as professional advice for medical, legal, financial, or other important life decisions.</p>
+      
+      <h4 class="font-semibold mb-4">3. User Responsibilities</h4>
+      <p class="mb-4">You agree to provide accurate and complete information when using our services. You are responsible for maintaining the confidentiality of your account information.</p>
+      
+      <h4 class="font-semibold mb-4">4. Payment and Refunds</h4>
+      <p class="mb-4">All payments are processed securely through our payment partners. Refunds are available within 24 hours of purchase if you haven't accessed your reading.</p>
+      
+      <h4 class="font-semibold mb-4">5. Privacy Policy</h4>
+      <p class="mb-4">Your privacy is important to us. We collect and use your information as described in our Privacy Policy.</p>
+      
+      <h4 class="font-semibold mb-4">6. Intellectual Property</h4>
+      <p class="mb-4">All content, including tarot card images, interpretations, and website design, is the property of Luna Seer and protected by copyright laws.</p>
+      
+      <h4 class="font-semibold mb-4">7. Limitation of Liability</h4>
+      <p class="mb-4">Luna Seer provides readings for entertainment purposes only. We are not liable for any decisions made based on our readings.</p>
+      
+      <h4 class="font-semibold mb-4">8. Changes to Terms</h4>
+      <p class="mb-4">We reserve the right to modify these terms at any time. Continued use of our services constitutes acceptance of any changes.</p>
+    </div>
+    <div class="p-6 border-t border-gray-200 flex justify-end gap-4">
+      <button type="button" id="close-terms-btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-button hover:bg-gray-300 transition-colors whitespace-nowrap">Close</button>
+      <button type="button" id="agree-terms-btn" class="px-4 py-2 bg-primary text-white rounded-button hover:bg-opacity-80 transition-colors whitespace-nowrap">I Agree</button>
+    </div>
+  </div>
+</div>
+</label>
+</div>
+<div class="text-center">
+<button type="submit" id="submit-details" class="bg-primary hover:bg-opacity-80 text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg whitespace-nowrap">Reveal My Cards</button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Tarot Card Selection Section -->
+<section id="tarot-selection" class="py-20 hidden">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Select Your Cards</h2>
+<p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto">Choose three cards that call to you. These cards will reveal insights about your past, present, and future.</p>
+<div class="flex flex-wrap justify-center gap-8 mb-12" id="tarot-cards-container">
+<!-- Cards will be dynamically generated here -->
+</div>
+<div class="text-center">
+<p class="mb-4 text-lg"><span id="selected-count">0</span>/3 cards selected</p>
+<button id="read-cards-btn" class="bg-primary hover:bg-opacity-80 text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg opacity-50 cursor-not-allowed whitespace-nowrap" disabled>Read My Cards</button>
+</div>
+</div>
+</section>
+<!-- Reading Results Section -->
+<section id="reading-results" class="py-20 hidden">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Your Tarot Reading</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+<div class="glass-effect rounded-xl p-6 text-center">
+<h3 class="text-xl font-semibold mb-4">Past</h3>
+<div id="past-card" class="tarot-card mx-auto w-48 h-72 mb-4">
+<div class="tarot-card-inner">
+<div class="tarot-card-front"></div>
+<div class="tarot-card-back"></div>
+</div>
+</div>
+<h4 id="past-card-name" class="text-lg font-medium mb-2">Card Name</h4>
+<p id="past-card-meaning" class="text-gray-300">Card meaning will appear here.</p>
+</div>
+<div class="glass-effect rounded-xl p-6 text-center">
+<h3 class="text-xl font-semibold mb-4">Present</h3>
+<div id="present-card" class="tarot-card mx-auto w-48 h-72 mb-4">
+<div class="tarot-card-inner">
+<div class="tarot-card-front"></div>
+<div class="tarot-card-back"></div>
+</div>
+</div>
+<h4 id="present-card-name" class="text-lg font-medium mb-2">Card Name</h4>
+<p id="present-card-meaning" class="text-gray-300">Card meaning will appear here.</p>
+</div>
+<div class="glass-effect rounded-xl p-6 text-center">
+<h3 class="text-xl font-semibold mb-4">Future</h3>
+<div id="future-card" class="tarot-card mx-auto w-48 h-72 mb-4">
+<div class="tarot-card-inner">
+<div class="tarot-card-front"></div>
+<div class="tarot-card-back"></div>
+</div>
+</div>
+<h4 id="future-card-name" class="text-lg font-medium mb-2">Card Name</h4>
+<p id="future-card-meaning" class="text-gray-300">Card meaning will appear here.</p>
+</div>
+</div>
+<div class="glass-effect rounded-xl p-8 max-w-3xl mx-auto mb-12">
+<h3 class="text-2xl font-semibold mb-4 text-center">Your Reading Interpretation</h3>
+<p id="reading-summary" class="text-gray-200 mb-6">Your personalized reading summary will appear here after the cards are interpreted.</p>
+<div class="partial-reading-content text-center mt-8 p-6 border-t border-gray-700">
+<p class="text-purple-300 mb-4">🔮 Unlock Your Complete Reading 🔮</p>
+<p class="text-gray-300 mb-6">Discover the full depth of your reading, including detailed interpretations of your present and future cards, personalized guidance, and voice narration.</p>
+<button id="unlock-full-reading" class="bg-primary hover:bg-opacity-80 text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg whitespace-nowrap">Unlock Full Reading - $50</button>
+</div>
+<div class="flex items-center justify-center space-x-4 mb-6">
+<button id="play-reading" class="flex items-center space-x-2 bg-primary hover:bg-opacity-80 text-white px-4 py-2 rounded-button transition-colors whitespace-nowrap">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-volume-up-line"></i>
+</div>
+<span>Listen to Reading</span>
+</button>
+<button id="pause-reading" class="flex items-center space-x-2 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-button transition-colors hidden whitespace-nowrap">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-pause-line"></i>
+</div>
+<span>Pause</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Services Section -->
+<section id="services" class="py-20">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Our Services</h2>
+<p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto">Choose the reading that best suits your spiritual journey and discover the insights that await you.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+<div class="glass-effect rounded-xl p-8 border border-gray-700 hover:border-purple-400 transition-colors">
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-2xl font-semibold">Basic Reading</h3>
+<span class="text-xl font-bold text-purple-300">Free</span>
+</div>
+<ul class="space-y-3 mb-8">
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-purple-400 mr-2">
+<i class="ri-check-line"></i>
+</div>
+<span>Three-card past, present, future reading</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-purple-400 mr-2">
+<i class="ri-check-line"></i>
+</div>
+<span>Basic card interpretations</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-purple-400 mr-2">
+<i class="ri-check-line"></i>
+</div>
+<span>Text summary of your reading</span>
+</li>
+<li class="flex items-start opacity-50">
+<div class="w-6 h-6 flex items-center justify-center text-gray-400 mr-2">
+<i class="ri-close-line"></i>
+</div>
+<span>Voice narration</span>
+</li>
+<li class="flex items-start opacity-50">
+<div class="w-6 h-6 flex items-center justify-center text-gray-400 mr-2">
+<i class="ri-close-line"></i>
+</div>
+<span>Detailed personal insights</span>
+</li>
+</ul>
+<button id="start-basic-reading" class="w-full bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-button font-medium transition-colors whitespace-nowrap">Start Basic Reading</button>
+</div>
+<div class="glass-effect rounded-xl p-8 border border-purple-500 shadow-lg shadow-purple-500/20 relative overflow-hidden">
+<div class="absolute top-3 right-3 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full">RECOMMENDED</div>
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-2xl font-semibold">Advanced Reading</h3>
+<span class="text-xl font-bold text-purple-300">$50</span>
+</div>
+<ul class="space-y-3 mb-8">
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-purple-400 mr-2">
+<i class="ri-check-line"></i>
+</div>
+<span>Comprehensive card Celtic Cross spread</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-purple-400 mr-2">
+<i class="ri-check-line"></i>
+</div>
+<span>In-depth card interpretations</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-purple-400 mr-2">
+<i class="ri-check-line"></i>
+</div>
+<span>Personalized insights based on your birth details</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-purple-400 mr-2">
+<i class="ri-check-line"></i>
+</div>
+<span>Professional voice narration</span>
+</li>
+<li class="flex items-start">
+<div class="w-6 h-6 flex items-center justify-center text-purple-400 mr-2">
+<i class="ri-check-line"></i>
+</div>
+<span>PDF download of your complete reading</span>
+</li>
+</ul>
+<button id="start-advanced-reading" class="w-full bg-primary hover:bg-opacity-80 text-white px-6 py-3 rounded-button font-medium transition-colors whitespace-nowrap">Get Advanced Reading</button>
+</div>
+</div>
+</div>
+</section>
+<!-- About Section -->
+<section id="about" class="py-20">
+<div class="container mx-auto px-4">
+<div class="flex flex-col md:flex-row items-center gap-12">
+<div class="md:w-1/2">
+<img src="https://readdy.ai/api/search-image?query=A%20mesmerizing%20collection%20of%20tarot%20cards%20arranged%20in%20an%20artistic%20spiral%20pattern%20floating%20in%20a%20mystical%20cosmic%20space.%20The%20cards%20emit%20a%20soft%20ethereal%20glow%2C%20with%20intricate%20golden%20details%20on%20their%20edges%20catching%20the%20light.%20The%20Major%20Arcana%20cards%20are%20prominently%20displayed%2C%20showing%20detailed%20symbolic%20artwork%20in%20rich%20jewel%20tones%20of%20deep%20purple%2C%20royal%20blue%2C%20and%20emerald%20green.%20Sacred%20geometry%20patterns%20connect%20the%20cards%20with%20threads%20of%20golden%20light%2C%20while%20swirling%20nebulas%20and%20distant%20stars%20create%20a%20magical%20backdrop.%20The%20composition%20suggests%20both%20ancient%20wisdom%20and%20modern%20mystical%20interpretation%2C%20with%20a%20professional%20and%20elegant%20aesthetic%20that%20balances%20traditional%20tarot%20symbolism%20with%20contemporary%20artistic%20style.&width=600&height=600&seq=987658&orientation=squarish" alt="About Luna Seer" class="w-full rounded-xl shadow-2xl">
+</div>
+<div class="md:w-1/2">
+<h2 class="text-3xl md:text-4xl font-bold mb-6">About Luna Seer</h2>
+<p class="text-gray-200 mb-4">Luna Seer combines ancient tarot wisdom with modern mystical insights to provide you with accurate and meaningful readings. Our approach blends traditional tarot symbolism with personalized interpretations based on your unique birth details.</p>
+<p class="text-gray-200 mb-6">Each reading is crafted to provide clarity, guidance, and insight into your life's journey. Whether you're facing important decisions, seeking direction, or simply curious about what the future holds, our readings offer valuable perspective.</p>
+<div class="space-y-4 mb-8">
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white mr-4 flex-shrink-0">
+<i class="ri-magic-line ri-lg"></i>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-1">Mystical Accuracy</h4>
+<p class="text-gray-300">Our readings combine ancient wisdom with personalized insights for remarkable accuracy.</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white mr-4 flex-shrink-0">
+<i class="ri-shield-star-line ri-lg"></i>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-1">Secure & Private</h4>
+<p class="text-gray-300">Your personal information and readings are kept completely confidential.</p>
+</div>
+</div>
+<div class="flex items-start">
+<div class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white mr-4 flex-shrink-0">
+<i class="ri-heart-line ri-lg"></i>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-1">Compassionate Guidance</h4>
+<p class="text-gray-300">Our readings offer insight with empathy, helping you navigate life's challenges.</p>
+</div>
+</div>
+</div>
+<a href="C:\Users\chari\OneDrive\Desktop\Luna Seer\.vscode\Seer's-Circle-Team-Profiles.html" data-readdy="true" class="inline-block">
+<button class="bg-primary hover:bg-opacity-80 text-white px-6 py-3 rounded-button font-medium transition-colors whitespace-nowrap">Meet Seer's Circle</button>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Payment Section (Hidden by Default) -->
+<section id="payment-section" class="py-20 hidden">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-4">Secure Payment</h2>
+<p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto">Complete your payment to receive your detailed tarot reading.</p>
+<div class="max-w-3xl mx-auto">
+<div class="glass-effect rounded-xl p-8 mb-8">
+<div class="flex flex-col md:flex-row justify-between mb-8">
+<div>
+<h3 class="text-xl font-semibold mb-2">Advanced Tarot Reading</h3>
+<p class="text-gray-300">Comprehensive personalized reading with voice narration</p>
+</div>
+<div class="text-right mt-4 md:mt-0">
+<span class="text-2xl font-bold">$50.00</span>
+</div>
+</div>
+<div class="border-t border-gray-700 pt-6">
+<h4 class="text-lg font-medium mb-4">Payment Method</h4>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+<div id="credit-card-option" class="payment-card p-4 rounded-xl flex items-center justify-center cursor-pointer border border-purple-500">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-bank-card-line ri-lg"></i>
+</div>
+<span>Credit Card</span>
+</div>
+<div id="paypal-option" class="payment-card p-4 rounded-xl flex items-center justify-center cursor-pointer border border-transparent hover:border-gray-600">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-paypal-line ri-lg"></i>
+</div>
+<span>PayPal</span>
+</div>
+<div id="apple-pay-option" class="payment-card p-4 rounded-xl flex items-center justify-center cursor-pointer border border-transparent hover:border-gray-600">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-apple-fill ri-lg"></i>
+</div>
+<span>Apple Pay</span>
+</div>
+</div>
+<form id="payment-form" class="space-y-6">
+<div id="credit-card-form">
+<div>
+<label for="card-name" class="block text-sm font-medium mb-2">Cardholder Name</label>
+<input type="text" id="card-name" name="card-name" required class="w-full bg-transparent border border-gray-500 rounded-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors">
+</div>
+<div>
+<label for="card-number" class="block text-sm font-medium mb-2">Card Number</label>
+<div class="relative">
+<input type="text" id="card-number" name="card-number" placeholder="XXXX XXXX XXXX XXXX" required class="w-full bg-transparent border border-gray-500 rounded-button p-3 pl-10 text-white focus:outline-none focus:border-purple-400 transition-colors">
+<div class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center">
+<i class="ri-bank-card-line"></i>
+</div>
+<div class="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-visa-fill"></i>
+</div>
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-mastercard-fill"></i>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div>
+<label for="expiry-date" class="block text-sm font-medium mb-2">Expiry Date</label>
+<input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required class="w-full bg-transparent border border-gray-500 rounded-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors">
+</div>
+<div>
+<label for="cvv" class="block text-sm font-medium mb-2">Security Code (CVV)</label>
+<div class="relative">
+<input type="text" id="cvv" name="cvv" placeholder="XXX" required class="w-full bg-transparent border border-gray-500 rounded-button p-3 text-white focus:outline-none focus:border-purple-400 transition-colors">
+<div class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400 cursor-help">
+<i class="ri-question-line"></i>
+</div>
+</div>
+</div>
+</div>
+<div>
+<label class="custom-checkbox flex items-center">
+<input type="checkbox" id="save-card" name="save-card">
+<span class="checkmark"></span>
+<span class="ml-7">Save card for future readings</span>
+</label>
+</div>
+<div class="pt-4 border-t border-gray-700">
+<div class="flex justify-between mb-2">
+<span>Subtotal</span>
+<span>$50.00</span>
+</div>
+<div class="flex justify-between mb-4">
+<span>Tax</span>
+<span>$0.00</span>
+</div>
+<div class="flex justify-between text-xl font-bold">
+<span>Total</span>
+<span>$50.00</span>
+</div>
+</div>
+<div class="text-center">
+<button type="submit" id="complete-payment" class="bg-primary hover:bg-opacity-80 text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg whitespace-nowrap">Complete Payment</button>
+</div>
+</form>
+<div id="paypal-form" class="space-y-6 hidden">
+<div class="text-center">
+<img src="https://readdy.ai/api/search-image?query=PayPal%20logo%20on%20a%20simple%20white%20background%2C%20modern%20and%20clean%20design%2C%20professional%20business%20style&width=200&height=80&seq=987659&orientation=landscape" alt="PayPal" class="h-12 mx-auto mb-6">
+<p class="text-gray-300 mb-6">You will be redirected to PayPal to complete your payment securely.</p>
+<button type="button" id="paypal-button" class="bg-[#0070BA] hover:bg-[#003087] text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg whitespace-nowrap">Continue to PayPal</button>
+</div>
+</div>
+<div id="apple-pay-form" class="space-y-6 hidden">
+<div class="text-center">
+<img src="https://readdy.ai/api/search-image?query=Apple%20Pay%20logo%20on%20a%20simple%20white%20background%2C%20modern%20and%20clean%20design%2C%20professional%20business%20style&width=200&height=80&seq=987660&orientation=landscape" alt="Apple Pay" class="h-12 mx-auto mb-6">
+<p class="text-gray-300 mb-6">Complete your purchase securely with Apple Pay.</p>
+<button type="button" id="apple-pay-button" class="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg whitespace-nowrap">Continue with Apple Pay</button>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-effect rounded-xl p-6">
+<h4 class="text-lg font-medium mb-4 flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2 text-green-400">
+<i class="ri-shield-check-line"></i>
+</div>
+Secure Payment
+</h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="flex flex-col items-center text-center">
+<div class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full mb-2">
+<i class="ri-lock-line ri-lg"></i>
+</div>
+<span class="text-sm">SSL Encryption</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full mb-2">
+<i class="ri-shield-keyhole-line ri-lg"></i>
+</div>
+<span class="text-sm">PCI DSS Compliant</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full mb-2">
+<i class="ri-fingerprint-line ri-lg"></i>
+</div>
+<span class="text-sm">Multi-Factor Auth</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full mb-2">
+<i class="ri-secure-payment-line ri-lg"></i>
+</div>
+<span class="text-sm">Tokenization</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Payment Success Section (Hidden by Default) -->
+<section id="payment-success" class="py-20 hidden">
+<div class="container mx-auto px-4 text-center">
+<div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+<div class="w-10 h-10 flex items-center justify-center">
+<i class="ri-check-line ri-2x"></i>
+</div>
+</div>
+<h2 class="text-3xl md:text-4xl font-bold mb-4">Payment Successful!</h2>
+<p class="text-gray-300 mb-8 max-w-2xl mx-auto">Thank you for your purchase. Your detailed tarot reading is being prepared and will be delivered to you shortly.</p>
+<div class="glass-effect rounded-xl p-8 max-w-2xl mx-auto mb-8">
+<h3 class="text-xl font-semibold mb-4">Order Summary</h3>
+<div class="flex justify-between mb-2">
+<span>Advanced Tarot Reading</span>
+<span>$50.00</span>
+</div>
+<div class="flex justify-between mb-2">
+<span>Order Number</span>
+<span id="order-number">LS-25789</span>
+</div>
+<div class="flex justify-between">
+<span>Date</span>
+<span>May 7, 2025</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button id="view-reading-btn" class="bg-primary hover:bg-opacity-80 text-white px-6 py-3 rounded-button font-medium transition-colors whitespace-nowrap">View Your Reading</button>
+<button id="back-to-home-btn" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-button font-medium transition-colors whitespace-nowrap">Back to Home</button>
+</div>
+</div>
+</section>
+<!-- Privacy Policy Section -->
+<section id="privacy" class="py-20 hidden">
+<div class="container mx-auto px-4">
+<h2 class="text-3xl md:text-4xl font-bold text-center mb-8">Privacy Policy</h2>
+<div class="glass-effect rounded-xl p-8 max-w-4xl mx-auto space-y-8">
+<div>
+<h3 class="text-2xl font-semibold mb-4">Introduction</h3>
+<p class="text-gray-300">Last updated: May 7, 2025</p>
+<p class="text-gray-300 mt-4">At Luna Seer, we respect your privacy and are committed to protecting your personal data. This privacy policy explains how we collect, use, and safeguard your information when you use our tarot reading services.</p>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Information We Collect</h3>
+<div class="space-y-4">
+<div>
+<h4 class="text-lg font-medium mb-2">Personal Information</h4>
+<ul class="list-disc list-inside text-gray-300 space-y-2">
+<li>Name and contact information</li>
+<li>Date and time of birth</li>
+<li>Payment information</li>
+<li>Questions and concerns shared during readings</li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-medium mb-2">Technical Information</h4>
+<ul class="list-disc list-inside text-gray-300 space-y-2">
+<li>Device and browser information</li>
+<li>IP address and location data</li>
+<li>Usage data and preferences</li>
+<li>Cookies and similar technologies</li>
+</ul>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">How We Use Your Information</h3>
+<ul class="list-disc list-inside text-gray-300 space-y-2">
+<li>To provide personalized tarot readings</li>
+<li>To process payments and maintain accounts</li>
+<li>To improve our services and user experience</li>
+<li>To send relevant updates and newsletters</li>
+<li>To comply with legal obligations</li>
+</ul>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Data Security</h3>
+<p class="text-gray-300">We implement appropriate security measures to protect your personal information, including:</p>
+<ul class="list-disc list-inside text-gray-300 space-y-2 mt-4">
+<li>SSL encryption for data transmission</li>
+<li>Secure payment processing</li>
+<li>Regular security assessments</li>
+<li>Limited access to personal information</li>
+</ul>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Your Rights</h3>
+<p class="text-gray-300">You have the right to:</p>
+<ul class="list-disc list-inside text-gray-300 space-y-2 mt-4">
+<li>Access your personal data</li>
+<li>Correct inaccurate information</li>
+<li>Request deletion of your data</li>
+<li>Withdraw consent for data processing</li>
+<li>Object to data processing</li>
+</ul>
+</div>
+<div>
+<h3 class="text-2xl font-semibold mb-4">Contact Us</h3>
+<p class="text-gray-300">If you have any questions about our Privacy Policy or how we handle your data, please contact us at:</p>
+<div class="mt-4 space-y-2 text-gray-300">
+<p>Email: privacy@lunaseer.com</p>
+<p>Address: 123 Mystic Lane, Spiritual City, SC 12345</p>
+<p>Phone: (555) 123-4567</p>
+</div>
+</div>
+<div class="mt-12 text-center">
+<button class="bg-primary hover:bg-opacity-80 text-white px-8 py-3 rounded-button text-lg font-medium transition-all transform hover:scale-105 shadow-lg whitespace-nowrap return-home-btn">Return to Home</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-12 glass-effect mt-20">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+<div>
+<a href="#" class="logo mb-4 inline-flex items-center gap-3"><img src="https://static.readdy.ai/image/6b4da18786c5fac0705475c458bfa954/0844d54b8087bc0a3a4223f23a08123d.png" alt="Luna Seer" class="h-10"><span class="font-['Pacifico'] text-xl text-white">Luna Seer</span></a>
+<p class="text-gray-300 mb-4">Discover your destiny through the ancient wisdom of tarot with modern mystical insights.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-facebook-fill"></i>
+</div>
+</a>
+<a href="#" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-twitter-fill"></i>
+</div>
+</a>
+<a href="https://www.instagram.com/lunaseer4?igsh=cjNmaThxcXl1Njg2" class="text-white hover:text-purple-300 transition-colors">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-instagram-fill"></i>
+</div>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+<ul class="space-y-2">
+<li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors" data-section="home">Home</a></li>
+<li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors" data-section="services">Services</a></li>
+<li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors" data-section="about">About Us</a></li>
+<li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors" data-section="faq">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Legal</h4>
+<ul class="space-y-2">
+<li><a href="#" class="text-gray-300 hover:text-white transition-colors" data-section="privacy">Privacy Policy</a></li>
+<li><a href="C:\Users\chari\OneDrive\Desktop\Luna Seer\.vscode\Terms-of-Service.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
+<li><a href="C:\Users\chari\OneDrive\Desktop\Luna Seer\.vscode\Cookie-Policy-Information.html" data-readdy="true" class="text-gray-300 hover:text-white transition-colors">Cookie Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+<p class="text-gray-300 mb-4">Subscribe to receive mystical insights and special offers.</p>
+<form class="flex">
+<input type="email" placeholder="Your email" class="bg-transparent border border-gray-600 rounded-l-button p-2 text-white focus:outline-none focus:border-purple-400 transition-colors flex-grow">
+<button type="submit" class="bg-primary hover:bg-opacity-80 text-white px-4 py-2 rounded-r-button whitespace-nowrap">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-400 mb-4 md:mb-0">© 2025 Luna Seer. All rights reserved.</p>
+<div class="flex items-center space-x-4">
+<div class="flex items-center">
+<div class="w-6 h-6 flex items-center justify-center mr-2">
+<i class="ri-shield-check-line text-green-400"></i>
+</div>
+<span class="text-sm text-gray-400">Secure Payments</span>
+</div>
+<div class="flex space-x-2">
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-visa-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-mastercard-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-paypal-fill ri-lg"></i>
+</div>
+<div class="w-8 h-8 flex items-center justify-center">
+<i class="ri-apple-fill ri-lg"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Terms of Service Modal Handling
+const termsModal = document.getElementById('terms-modal');
+const termsServiceBtn = document.getElementById('terms-service-btn');
+const closeTermsBtn = document.getElementById('close-terms-btn');
+const agreeTermsBtn = document.getElementById('agree-terms-btn');
+const termsCheckbox = document.getElementById('terms');
+
+termsServiceBtn.addEventListener('click', function(e) {
+  e.preventDefault();
+  termsModal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+});
+
+function closeModal() {
+  termsModal.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+closeTermsBtn.addEventListener('click', closeModal);
+
+agreeTermsBtn.addEventListener('click', function() {
+  termsCheckbox.checked = true;
+  const event = new Event('change');
+  termsCheckbox.dispatchEvent(event);
+  closeModal();
+});
+
+termsModal.addEventListener('click', function(e) {
+  if (e.target === termsModal) {
+    closeModal();
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && !termsModal.classList.contains('hidden')) {
+    closeModal();
+  }
+});
+
+// Handle return to home from privacy policy
+document.querySelector('.return-home-btn')?.addEventListener('click', function() {
+document.getElementById('privacy').classList.add('hidden');
+document.getElementById('home').classList.remove('hidden');
+document.getElementById('services').classList.remove('hidden');
+document.getElementById('about').classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+// Handle checkmark clicks
+document.querySelectorAll('.custom-checkbox').forEach(checkbox => {
+const checkmark = checkbox.querySelector('.checkmark');
+const input = checkbox.querySelector('input[type="checkbox"]');
+if (checkmark && input) {
+checkmark.addEventListener('click', (e) => {
+e.preventDefault();
+input.checked = !input.checked;
+const event = new Event('change');
+input.dispatchEvent(event);
+checkmark.classList.toggle('clicked');
+setTimeout(() => checkmark.classList.remove('clicked'), 200);
+});
+}
+});
+// Create stars background
+const starsContainer = document.getElementById('stars');
+for (let i = 0; i < 100; i++) {
+const star = document.createElement('div');
+star.classList.add('star');
+star.style.width = `${Math.random() * 3}px`;
+star.style.height = star.style.width;
+star.style.left = `${Math.random() * 100}%`;
+star.style.top = `${Math.random() * 100}%`;
+star.style.animationDelay = `${Math.random() * 5}s`;
+starsContainer.appendChild(star);
+}
+// Mobile menu toggle and navigation
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const navLinks = document.querySelectorAll('.nav-link, .footer-link');
+const privacyLinks = document.querySelectorAll('[data-section="privacy"]');
+mobileMenuButton.addEventListener('click', function() {
+mobileMenu.classList.toggle('hidden');
+});
+function handlePrivacyClick(e) {
+e.preventDefault();
+document.querySelectorAll('section').forEach(section => {
+section.classList.add('hidden');
+});
+document.getElementById('privacy').classList.remove('hidden');
+mobileMenu.classList.add('hidden');
+window.scrollTo(0, 0);
+}
+privacyLinks.forEach(link => {
+link.addEventListener('click', handlePrivacyClick);
+});
+navLinks.forEach(link => {
+link.addEventListener('click', function(e) {
+e.preventDefault();
+const targetSection = this.getAttribute('data-section');
+// Hide all sections first
+document.querySelectorAll('section').forEach(section => {
+section.classList.add('hidden');
+});
+// Show target sections based on navigation
+if (targetSection === 'home') {
+document.getElementById('home').classList.remove('hidden');
+document.getElementById('services').classList.remove('hidden');
+document.getElementById('about').classList.remove('hidden');
+} else if (targetSection === 'services') {
+document.getElementById('services').classList.remove('hidden');
+} else if (targetSection === 'about') {
+document.getElementById('about').classList.remove('hidden');
+} else if (targetSection === 'privacy') {
+document.getElementById('privacy').classList.remove('hidden');
+}
+// Close mobile menu if open
+mobileMenu.classList.add('hidden');
+// Scroll to the target section
+document.getElementById(targetSection).scrollIntoView({ behavior: 'smooth' });
+});
+});
+// Navigation between sections
+const startReadingBtn = document.getElementById('start-reading-btn');
+const startBasicReadingBtn = document.getElementById('start-basic-reading');
+const startAdvancedReadingBtn = document.getElementById('start-advanced-reading');
+const readingFormSection = document.getElementById('reading-form');
+const homeSection = document.getElementById('home');
+const servicesSection = document.getElementById('services');
+startReadingBtn.addEventListener('click', function() {
+homeSection.classList.add('hidden');
+servicesSection.classList.add('hidden');
+readingFormSection.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+startBasicReadingBtn.addEventListener('click', function() {
+homeSection.classList.add('hidden');
+servicesSection.classList.add('hidden');
+readingFormSection.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+startAdvancedReadingBtn.addEventListener('click', function() {
+homeSection.classList.add('hidden');
+servicesSection.classList.add('hidden');
+readingFormSection.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+// User details form submission
+const userDetailsForm = document.getElementById('user-details-form');
+const tarotSelectionSection = document.getElementById('tarot-selection');
+userDetailsForm.addEventListener('submit', function(e) {
+e.preventDefault();
+readingFormSection.classList.add('hidden');
+tarotSelectionSection.classList.remove('hidden');
+window.scrollTo(0, 0);
+generateTarotCards();
+});
+// Tarot card generation and selection
+const tarotCardsContainer = document.getElementById("tarot-cards-container");
+  const selectedCountElement = document.getElementById("selected-count");
+  const readCardsBtn = document.getElementById("read-cards-btn");
+  const readingResultsSection = document.getElementById("reading-results");
+  let selectedCards = [];
+  const maxSelections = 3;
+  function generateTarotCards() {
+    tarotCardsContainer.innerHTML = "";
+    selectedCards = [];
+    updateSelectedCount();
+    const tarotCardData = [
+      {
+        name: "The Fool",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Fool%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20joyful%20figure%20stepping%20off%20a%20cliff%20with%20a%20small%20dog%20at%20their%20heels.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20blue%20and%20purple.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100001&orientation=portrait",
+      },
+      {
+        name: "The Magician",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Magician%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20powerful%20figure%20with%20one%20arm%20raised%20holding%20a%20wand%20and%20the%20other%20pointing%20downward.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20red%20and%20purple.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100002&orientation=portrait",
+      },
+      {
+        name: "The High Priestess",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20High%20Priestess%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20serene%20female%20figure%20seated%20between%20two%20pillars%20with%20a%20crescent%20moon%20at%20her%20feet.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20blue%20and%20silver.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100003&orientation=portrait",
+      },
+      {
+        name: "The Empress",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Empress%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20regal%20female%20figure%20seated%20on%20a%20throne%20surrounded%20by%20nature%20and%20abundance.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20green%20and%20gold.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100004&orientation=portrait",
+      },
+      {
+        name: "The Emperor",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Emperor%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20powerful%20male%20figure%20seated%20on%20a%20stone%20throne%20with%20ram%20symbols.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20red%20and%20gold.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100005&orientation=portrait",
+      },
+      {
+        name: "The Hierophant",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Hierophant%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20religious%20figure%20seated%20between%20two%20pillars%20with%20followers%20at%20his%20feet.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20red%20and%20gold.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100006&orientation=portrait",
+      },
+      {
+        name: "The Lovers",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Lovers%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20two%20figures%20in%20an%20ethereal%20garden%20with%20an%20angel%20above%20them.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20pink%20and%20gold.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100007&orientation=portrait",
+      },
+      {
+        name: "The Chariot",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Chariot%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20triumphant%20figure%20in%20a%20chariot%20drawn%20by%20two%20sphinxes.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20blue%20and%20gold.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100008&orientation=portrait",
+      },
+      {
+        name: "Strength",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Strength%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20serene%20woman%20gently%20closing%20a%20lions%20mouth.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20gold%20and%20white.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100009&orientation=portrait",
+      },
+      {
+        name: "The Hermit",
+        image:
+          "https://readdy.ai/api/search-image?query=The%20Hermit%20tarot%20card%20with%20detailed%20mystical%20artwork%2C%20showing%20a%20robed%20figure%20holding%20a%20lantern%20on%20a%20snowy%20mountain%20peak.%20The%20card%20has%20ornate%20golden%20borders%20with%20celestial%20symbols%20and%20rich%2C%20vibrant%20colors%20of%20purple%20and%20silver.%20The%20artwork%20style%20is%20detailed%20and%20magical%20with%20cosmic%20elements%20in%20the%20background.&width=300&height=500&seq=100010&orientation=portrait",
+      },
+    ];
+    // Shuffle the cards
+    const shuffledCards = [...tarotCardData].sort(() => Math.random() - 0.5);
+    // Create 6 tarot cards
+    shuffledCards.forEach((card, index) => {
+      const cardElement = document.createElement("div");
+      cardElement.classList.add("tarot-card");
+      cardElement.style.width = "140px";
+      cardElement.style.height = "220px";
+      cardElement.dataset.index = index;
+      cardElement.dataset.name = card.name;
+      cardElement.dataset.image = card.image;
+      cardElement.innerHTML = `
+<div class="tarot-card-inner">
+<div class="tarot-card-front" style="background-image: url('https://static.readdy.ai/image/6b4da18786c5fac0705475c458bfa954/5c4a46dfbe01f751180989f56c54b1c8.png'); background-size: cover; background-position: center;"></div>
+<div class="tarot-card-back" style="background-image: url('${card.image}')"></div>
+</div>
+`;
+      cardElement.addEventListener("click", function () {
+        if (
+          selectedCards.length < maxSelections &&
+          !selectedCards.includes(index)
+        ) {
+          selectedCards.push(index);
+          cardElement.classList.add("selected");
+          cardElement.classList.add("flipped");
+          if (selectedCards.length === maxSelections) {
+            // Lock unselected cards
+            document.querySelectorAll(".tarot-card").forEach((card) => {
+              if (!card.classList.contains("selected")) {
+                card.classList.add("locked");
+              }
+            });
+            readCardsBtn.classList.remove("opacity-50", "cursor-not-allowed");
+            readCardsBtn.disabled = false;
+          }
+          updateSelectedCount();
+        }
+      });
+      tarotCardsContainer.appendChild(cardElement);
+    });
+  }
+  function updateSelectedCount() {
+    selectedCountElement.textContent = selectedCards.length;
+  }
+  readCardsBtn.addEventListener("click", function () {
+    if (selectedCards.length === maxSelections) {
+      tarotSelectionSection.classList.add("hidden");
+      readingResultsSection.classList.remove("hidden");
+      window.scrollTo(0, 0);
+      displayReadingResults(false);
+    }
+  });
+  // Display reading results
+  function displayReadingResults(isFullReading = false) {
+    const pastCard = document.getElementById("past-card");
+    const presentCard = document.getElementById("present-card");
+    const futureCard = document.getElementById("future-card");
+    const pastCardName = document.getElementById("past-card-name");
+    const presentCardName = document.getElementById("present-card-name");
+    const futureCardName = document.getElementById("future-card-name");
+    const pastCardMeaning = document.getElementById("past-card-meaning");
+    const presentCardMeaning = document.getElementById("present-card-meaning");
+    const futureCardMeaning = document.getElementById("future-card-meaning");
+    const readingSummary = document.getElementById("reading-summary");
+    const selectedCardElements = Array.from(
+      document.querySelectorAll(".tarot-card.selected"),
+    );
+    if (!isFullReading) {
+      document
+        .querySelectorAll(".full-reading-content")
+        .forEach((el) => el.classList.add("hidden"));
+      document
+        .querySelectorAll(".partial-reading-content")
+        .forEach((el) => el.classList.remove("hidden"));
+    } else {
+      document
+        .querySelectorAll(".full-reading-content")
+        .forEach((el) => el.classList.remove("hidden"));
+      document
+        .querySelectorAll(".partial-reading-content")
+        .forEach((el) => el.classList.add("hidden"));
+    }
+    // Past card
+    const pastCardElement = selectedCardElements[0];
+    pastCard.querySelector(".tarot-card-back").style.backgroundImage =
+      `url('${pastCardElement.dataset.image}')`;
+    pastCard.classList.add("flipped");
+    pastCardName.textContent = pastCardElement.dataset.name;
+    pastCardMeaning.textContent = getCardMeaning(
+      pastCardElement.dataset.name,
+      "past",
+    );
+    // Present card
+    const presentCardElement = selectedCardElements[1];
+    presentCard.querySelector(".tarot-card-back").style.backgroundImage =
+      `url('${presentCardElement.dataset.image}')`;
+    presentCard.classList.add("flipped");
+    presentCardName.textContent = presentCardElement.dataset.name;
+    presentCardMeaning.textContent = getCardMeaning(
+      presentCardElement.dataset.name,
+      "present",
+    );
+    // Future card
+    const futureCardElement = selectedCardElements[2];
+    futureCard.querySelector(".tarot-card-back").style.backgroundImage =
+      `url('${futureCardElement.dataset.image}')`;
+    futureCard.classList.add("flipped");
+    futureCardName.textContent = futureCardElement.dataset.name;
+    futureCardMeaning.textContent = getCardMeaning(
+      futureCardElement.dataset.name,
+      "future",
+    );
+    // Generate reading summary
+    if (isFullReading) {
+      readingSummary.textContent = `Your reading reveals a profound journey of transformation. ${pastCardMeaning.textContent} Currently, ${presentCardMeaning.textContent.toLowerCase()} Looking ahead, ${futureCardMeaning.textContent.toLowerCase()} This spread suggests that by embracing change and trusting your intuition, you'll find the clarity you seek. The cards indicate specific guidance for your path ahead...`;
+    } else {
+      readingSummary.textContent = `Your cards reveal an intriguing pattern. ${pastCardMeaning.textContent} For a complete interpretation including detailed insights about your present and future paths, consider upgrading to our advanced reading.`;
+      futureCardMeaning.textContent =
+        "Unlock your complete future reading with our advanced package...";
+    }
+  }
+  function getCardMeaning(cardName, position) {
+    const meanings = {
+      "The Fool": {
+        past: "In the past, you embarked on a journey with innocence and openness, taking risks without fear of the outcome.",
+        present:
+          "You're currently at a point of new beginnings, with opportunities that require a leap of faith.",
+        future:
+          "The future holds exciting new adventures that will require you to trust your instincts and embrace the unknown.",
+      },
+      "The Magician": {
+        past: "Your past shows a time when you harnessed your talents and resources to manifest your desires.",
+        present:
+          "You currently possess all the tools needed to create the reality you desire—it's time to channel your power.",
+        future:
+          "Your future holds great potential for manifestation if you align your intentions with your actions.",
+      },
+      "The High Priestess": {
+        past: "Your past was marked by intuition and inner knowing that guided your decisions, even if you didn't fully recognize it.",
+        present:
+          "Your intuition is heightened now—pay attention to your dreams and subconscious messages.",
+        future:
+          "Developing your intuitive abilities will reveal hidden truths and guide you toward your highest path.",
+      },
+      "The Empress": {
+        past: "Your past was abundant with creativity and nurturing energy that helped you or others grow.",
+        present:
+          "You're in a period of fertility and abundance—nurture your projects and relationships.",
+        future:
+          "Your future promises creative fulfillment and material abundance if you continue to nurture your passions.",
+      },
+      "The Emperor": {
+        past: "Your past involved establishing structure and authority, perhaps taking control of a chaotic situation.",
+        present:
+          "You're currently establishing order and boundaries that will serve as a foundation for future success.",
+        future:
+          "Your future calls for leadership and creating stable structures that will support your long-term vision.",
+      },
+      "The Hierophant": {
+        past: "Your past was influenced by traditional values and spiritual teachings that shaped your worldview.",
+        present:
+          "You're seeking guidance from established wisdom or institutions to navigate your current situation.",
+        future:
+          "Your future may involve becoming a teacher or mentor, sharing wisdom gained through your experiences.",
+      },
+      "The Lovers": {
+        past: "Your past decisions were guided by love and harmony, leading to important partnerships or choices.",
+        present:
+          "You're facing important choices about relationships and values—listen to your heart.",
+        future:
+          "Love and meaningful connections will play a crucial role in your path forward.",
+      },
+      "The Chariot": {
+        past: "Your past victories came through determination and maintaining control over opposing forces.",
+        present:
+          "You're in a period of forward momentum—stay focused on your goals despite any obstacles.",
+        future:
+          "Success awaits through willpower and maintaining a balanced approach to challenges.",
+      },
+      Strength: {
+        past: "Your past challenges were overcome through inner strength and gentle persistence.",
+        present:
+          "Your current situation calls for patience and soft power rather than force.",
+        future:
+          "Your future success will come through maintaining composure and gentle courage.",
+      },
+      "The Hermit": {
+        past: "Your past period of solitude or introspection provided valuable wisdom and self-knowledge.",
+        present:
+          "This is a time for inner reflection and seeking deeper truths about yourself.",
+        future:
+          "Your journey of self-discovery will lead to enlightenment and sharing wisdom with others.",
+      },
+    };
+    return (
+      meanings[cardName][position] ||
+      "This card suggests important energies at work in your life."
+    );
+  }
+// Audio playback for reading
+const playReadingBtn = document.getElementById('play-reading');
+const pauseReadingBtn = document.getElementById('pause-reading');
+let speechSynthesis = window.speechSynthesis;
+let speechUtterance = null;
+playReadingBtn.addEventListener('click', function() {
+const readingSummary = document.getElementById('reading-summary').textContent;
+if (speechUtterance === null) {
+speechUtterance = new SpeechSynthesisUtterance(readingSummary);
+speechUtterance.rate = 0.9;
+speechUtterance.pitch = 1;
+speechUtterance.volume = 1;
+// Get available voices and select a female voice if available
+let voices = speechSynthesis.getVoices();
+if (voices.length === 0) {
+speechSynthesis.onvoiceschanged = () => {
+voices = speechSynthesis.getVoices();
+const femaleVoice = voices.find(voice => voice.name.includes('female') || voice.name.includes('Female'));
+if (femaleVoice) {
+speechUtterance.voice = femaleVoice;
+}
+};
+} else {
+const femaleVoice = voices.find(voice => voice.name.includes('female') || voice.name.includes('Female'));
+if (femaleVoice) {
+speechUtterance.voice = femaleVoice;
+}
+}
+speechUtterance.onend = function() {
+pauseReadingBtn.classList.add('hidden');
+playReadingBtn.classList.remove('hidden');
+speechUtterance = null;
+};
+}
+playReadingBtn.classList.add('hidden');
+pauseReadingBtn.classList.remove('hidden');
+speechSynthesis.speak(speechUtterance);
+});
+pauseReadingBtn.addEventListener('click', function() {
+pauseReadingBtn.classList.add('hidden');
+playReadingBtn.classList.remove('hidden');
+if (speechUtterance) {
+speechSynthesis.cancel();
+speechUtterance = null;
+}
+});
+// Payment section handling
+const unlockFullReadingBtn = document.getElementById('unlock-full-reading');
+const paymentSection = document.getElementById('payment-section');
+unlockFullReadingBtn.addEventListener('click', function() {
+readingResultsSection.classList.add('hidden');
+paymentSection.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+// Payment method selection handling
+const creditCardOption = document.getElementById('credit-card-option');
+const paypalOption = document.getElementById('paypal-option');
+const applePayOption = document.getElementById('apple-pay-option');
+const creditCardForm = document.getElementById('credit-card-form');
+const paypalForm = document.getElementById('paypal-form');
+const applePayForm = document.getElementById('apple-pay-form');
+const completePaymentBtn = document.getElementById('complete-payment');
+function resetPaymentMethods() {
+[creditCardOption, paypalOption, applePayOption].forEach(option => {
+option.classList.remove('border-purple-500');
+option.classList.add('border-transparent', 'hover:border-gray-600');
+});
+[creditCardForm, paypalForm, applePayForm].forEach(form => {
+form.classList.add('hidden');
+});
+}
+creditCardOption.addEventListener('click', function() {
+resetPaymentMethods();
+creditCardOption.classList.remove('border-transparent', 'hover:border-gray-600');
+creditCardOption.classList.add('border-purple-500');
+creditCardForm.classList.remove('hidden');
+completePaymentBtn.classList.remove('hidden');
+});
+paypalOption.addEventListener('click', function() {
+resetPaymentMethods();
+paypalOption.classList.remove('border-transparent', 'hover:border-gray-600');
+paypalOption.classList.add('border-purple-500');
+paypalForm.classList.remove('hidden');
+completePaymentBtn.classList.add('hidden');
+});
+applePayOption.addEventListener('click', function() {
+resetPaymentMethods();
+applePayOption.classList.remove('border-transparent', 'hover:border-gray-600');
+applePayOption.classList.add('border-purple-500');
+applePayForm.classList.remove('hidden');
+completePaymentBtn.classList.add('hidden');
+});
+const applePayButton = document.getElementById('apple-pay-button');
+applePayButton.addEventListener('click', function() {
+if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
+const paymentRequest = {
+countryCode: 'US',
+currencyCode: 'USD',
+total: {
+label: 'Luna Seer Advanced Reading',
+amount: '50.00'
+}
+};
+const session = new ApplePaySession(3, paymentRequest);
+session.onvalidatemerchant = (event) => {
+// Here you would validate your merchant session with your server
+console.log('Merchant validation required');
+};
+session.onpaymentauthorized = (event) => {
+// Here you would process the payment with your server
+session.completePayment(ApplePaySession.STATUS_SUCCESS);
+paymentSection.classList.add('hidden');
+paymentSuccessSection.classList.remove('hidden');
+window.scrollTo(0, 0);
+};
+session.begin();
+} else {
+console.log('Apple Pay is not available');
+}
+});
+// Payment form handling
+const paymentForm = document.getElementById('payment-form');
+const paymentSuccessSection = document.getElementById('payment-success');
+const paypalButton = document.getElementById('paypal-button');
+paymentForm.addEventListener('submit', function(e) {
+e.preventDefault();
+paymentSection.classList.add('hidden');
+paymentSuccessSection.classList.remove('hidden');
+window.scrollTo(0, 0);
+// Generate random order number
+document.getElementById('order-number').textContent = `LS-${Math.floor(10000 + Math.random() * 90000)}`;
+});
+paypalButton.addEventListener('click', function() {
+// Simulate PayPal redirect
+window.location.href = 'https://www.paypal.com';
+});
+// Return to home from payment success
+const backToHomeBtn = document.getElementById('back-to-home-btn');
+backToHomeBtn.addEventListener('click', function() {
+paymentSuccessSection.classList.add('hidden');
+homeSection.classList.remove('hidden');
+servicesSection.classList.remove('hidden');
+window.scrollTo(0, 0);
+});
+// View reading from payment success
+const viewReadingBtn = document.getElementById('view-reading-btn');
+viewReadingBtn.addEventListener('click', function() {
+paymentSuccessSection.classList.add('hidden');
+readingResultsSection.classList.remove('hidden');
+displayReadingResults(true);
+window.scrollTo(0, 0);
+});
+// Card number formatting
+const cardNumberInput = document.getElementById('card-number');
+cardNumberInput.addEventListener('input', function(e) {
+let value = e.target.value.replace(/\D/g, '');
+if (value.length > 16) value = value.slice(0, 16);
+// Add spaces every 4 digits
+const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+e.target.value = formattedValue;
+});
+// Expiry date formatting
+const expiryDateInput = document.getElementById('expiry-date');
+expiryDateInput.addEventListener('input', function(e) {
+let value = e.target.value.replace(/\D/g, '');
+if (value.length > 4) value = value.slice(0, 4);
+if (value.length > 2) {
+value = value.slice(0, 2) + '/' + value.slice(2);
+}
+e.target.value = value;
+});
+// CVV formatting
+const cvvInput = document.getElementById('cvv');
+cvvInput.addEventListener('input', function(e) {
+let value = e.target.value.replace(/\D/g, '');
+if (value.length > 3) value = value.slice(0, 3);
+e.target.value = value;
+});
+});
+</script>
+</body>
+</html>
